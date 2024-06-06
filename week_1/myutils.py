@@ -1,7 +1,7 @@
 
 
 def is_number(n):
-    return True if isinstance(n, float) else False
+    return True if ( isinstance(n, float) or isinstance(n, int) ) else False
 
 
 def factorial(n: int) -> int:

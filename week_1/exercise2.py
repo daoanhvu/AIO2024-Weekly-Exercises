@@ -1,29 +1,39 @@
 import math
 from myutils import is_number
 
-def exercise2(x, activation_function: str):
+def calc_sig(x):
+    return 1.0 / (1.0 + math.exp(-x))
 
+def calc_elu(x, alpha):
+    return (alpha * (math.exp(x) - 1.0)) if x <= 0 else x
+
+
+def calc_activation_func(x, act_name: str):
+    if act_name == 'sigmoid':
+        return calc_sig(x=x)
+    elif act_name == 'relu':
+        return 0 if x <= 0 else x
+    else:
+        alpha = 0.01
+        return calc_elu(x = x, alpha=alpha)
+
+
+def exercise2(x, act_name: str):
     if not is_number(x):
         print("x must be a number.")
         return
     
-    lower_af = activation_function.lower()
+    lower_af = act_name.lower()
     
     if lower_af != 'sigmoid' and lower_af != 'relu' and lower_af != 'elu':
-        print(f'{activation_function} is not supported.')
+        print(f'{act_name} is not supported.')
         return
     
-    if lower_af == 'sigmoid':
-        result = 1.0 / (1.0 + math.exp(-x))
-    elif lower_af == 'relu':
-        result = 0 if x <= 0 else x
-    elif lower_af == 'elu':
-        alpha = 0.01
-        result = (alpha * (math.exp(x) - 1.0)) if x <= 0 else x
+    result = calc_activation_func(x=x, act_name=act_name)
         
-    print(f'Activation function: {activation_function}')
-    print(f'{activation_function}: f({x}) = {result}')
+    print(f'Activation function: {act_name}')
+    print(f'{act_name}: f({x}) = {result}')
 
 
 if __name__ == '__main__':
-    exercise2(x=1.2, activation_function='sigmoid')
+    exercise2(x=1.2, act_name='sigmoid')
